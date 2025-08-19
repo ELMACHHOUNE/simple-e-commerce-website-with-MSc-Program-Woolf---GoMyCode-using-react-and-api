@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useSearchParams } from "react-router-dom";
+import Pagination from "./Pagination"; // new
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [status, setStatus] = useState("loading"); // loading | ok | error
-  const [searchParams] = useSearchParams();
-  const activeCategory = searchParams.get("category");
+  const PAGE_SIZE = 16;
+
+  const [searchParams, setSearchParams] = useSearchParams(); // updated
+  const activeCategory = searchParams.get("category") || "";
+  const pageParam = parseInt(searchParams.get("page") || "1", 10);
+  const currentPage = Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,6 +26,52 @@ const Products = () => {
     fetchProducts();
   }, []);
 
+  // Reset page when category changes
+  useEffect(() => {
+    const existingCategory = searchParams.get("category") || "";
+    if (
+      existingCategory.toLowerCase() === activeCategory.toLowerCase() &&
+      currentPage === 1
+    )
+      return;
+    const next = new URLSearchParams(searchParams);
+    if (activeCategory) next.set("category", activeCategory);
+    else next.delete("category");
+    next.set("page", "1");
+    setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCategory]);
+
+  // Moved above early returns: helpers, filtering, totals, clamping
+  const toTitle = (s) =>
+    (s || "")
+      .split(/[\s-]+/)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+
+  const visibleProducts = activeCategory
+    ? products.filter(
+        (p) => p.category.toLowerCase() === activeCategory.toLowerCase()
+      )
+    : products;
+
+  const totalItems = visibleProducts.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+
+  // Clamp page if out of bounds (unconditional hook)
+  useEffect(() => {
+    if (status !== "ok") return;
+    if (currentPage > totalPages) {
+      const next = new URLSearchParams(searchParams);
+      if (activeCategory) next.set("category", activeCategory);
+      else next.delete("category");
+      next.set("page", "1");
+      setSearchParams(next, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, totalPages, currentPage]);
+
+  // Early returns AFTER all hooks
   if (status === "loading") {
     return (
       <section className="max-w-7xl mx-auto px-4 py-10">
@@ -55,17 +106,12 @@ const Products = () => {
     );
   }
 
-  const toTitle = (s) =>
-    (s || "")
-      .split(/[\s-]+/)
-      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(" ");
-
-  const visibleProducts = activeCategory
-    ? products.filter(
-        (p) => p.category.toLowerCase() === activeCategory.toLowerCase()
-      )
-    : products;
+  // Pagination slice
+  const startIndex = (currentPage - 1) * PAGE_SIZE;
+  const displayedProducts = visibleProducts.slice(
+    startIndex,
+    startIndex + PAGE_SIZE
+  );
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-10">
@@ -85,59 +131,75 @@ const Products = () => {
           </Link>
         )}
       </div>
-      {visibleProducts.length === 0 ? (
+      {displayedProducts.length === 0 ? (
         <div className="bg-yellow-50 text-yellow-700 border border-yellow-200 p-4 rounded">
           No products found for “{toTitle(activeCategory)}”.
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {visibleProducts.map((p) => (
-            <article
-              key={p.id}
-              className="bg-white rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col"
-            >
-              <Link
-                to={`/products/${p.id}`}
-                className="w-full aspect-square flex items-center justify-center overflow-hidden"
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {displayedProducts.map((p) => (
+              <article
+                key={p.id}
+                className="bg-white rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col"
               >
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="h-40 object-contain"
-                  loading="lazy"
-                />
-              </Link>
-              <Link
-                to={`/products/${p.id}`}
-                className="mt-4 text-sm font-medium text-gray-900 h-10 overflow-hidden hover:text-blue-600"
-              >
-                {p.title}
-              </Link>
-              <p className="text-xs text-gray-500 capitalize mt-1">
-                {p.category}
-              </p>
-              <div className="mt-auto flex items-center justify-between pt-4">
-                <span className="text-lg font-semibold text-gray-900">
-                  ${Number(p.price).toFixed(2)}
-                </span>
-                <div className="flex items-center gap-2">
-                  <Link
-                    to={`/products/${p.id}`}
-                    className="inline-flex items-center px-3 py-2 rounded-md border border-gray-300 text-gray-700 text-sm hover:bg-gray-50"
-                  >
-                    Details
-                  </Link>
-                  <button
-                    type="button"
-                    className="inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    Add to cart
-                  </button>
+                <Link
+                  to={`/products/${p.id}`}
+                  className="w-full aspect-square flex items-center justify-center overflow-hidden"
+                >
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className="h-40 object-contain"
+                    loading="lazy"
+                  />
+                </Link>
+                <Link
+                  to={`/products/${p.id}`}
+                  className="mt-4 text-sm font-medium text-gray-900 h-10 overflow-hidden hover:text-blue-600"
+                >
+                  {p.title}
+                </Link>
+                <p className="text-xs text-gray-500 capitalize mt-1">
+                  {p.category}
+                </p>
+                <div className="mt-auto flex items-center justify-between pt-4">
+                  <span className="text-lg font-semibold text-gray-900">
+                    ${Number(p.price).toFixed(2)}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      to={`/products/${p.id}`}
+                      className="inline-flex items-center px-3 py-2 rounded-md border border-gray-300 text-gray-700 text-sm hover:bg-gray-50"
+                    >
+                      Details
+                    </Link>
+                    <button
+                      type="button"
+                      className="inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            ))}
+          </div>
+
+          <Pagination
+            totalItems={totalItems}
+            pageSize={PAGE_SIZE}
+            currentPage={currentPage}
+            onPageChange={(page) => {
+              const next = new URLSearchParams(searchParams);
+              if (activeCategory) next.set("category", activeCategory);
+              else next.delete("category");
+              next.set("page", String(page));
+              setSearchParams(next);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          />
+        </>
       )}
     </section>
   );
