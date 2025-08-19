@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const accentClasses = [
   "bg-blue-100 text-blue-700 ring-blue-200",
@@ -89,14 +90,13 @@ const Categories = () => {
               <p className="text-sm text-gray-500 mt-1">
                 Explore the latest in {c.toLowerCase()}.
               </p>
-              <button
-                type="button"
+              <Link
+                to={`/products?category=${encodeURIComponent(c)}`}
                 className="mt-4 inline-flex items-center text-sm text-blue-600 group-hover:text-blue-700"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                title="Browse products by category (demo)"
+                title={`View items in ${prettify(c)}`}
               >
                 View items →
-              </button>
+              </Link>
             </article>
           );
         })}
