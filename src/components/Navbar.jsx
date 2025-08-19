@@ -29,6 +29,14 @@ const Navbar = () => {
           >
             Products
           </NavLink>
+          <NavLink
+            to="/categories"
+            className={({ isActive }) =>
+              `${linkBase} ${isActive ? linkActive : linkInactive}`
+            }
+          >
+            Categories
+          </NavLink>
         </div>
       </div>
     </nav>

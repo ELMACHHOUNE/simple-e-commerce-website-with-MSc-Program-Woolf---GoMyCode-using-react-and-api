@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -61,17 +62,23 @@ const Products = () => {
             key={p.id}
             className="bg-white rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col"
           >
-            <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
+            <Link
+              to={`/products/${p.id}`}
+              className="w-full aspect-square flex items-center justify-center overflow-hidden"
+            >
               <img
                 src={p.image}
                 alt={p.title}
                 className="h-40 object-contain"
                 loading="lazy"
               />
-            </div>
-            <h3 className="mt-4 text-sm font-medium text-gray-900 h-10 overflow-hidden">
+            </Link>
+            <Link
+              to={`/products/${p.id}`}
+              className="mt-4 text-sm font-medium text-gray-900 h-10 overflow-hidden hover:text-blue-600"
+            >
               {p.title}
-            </h3>
+            </Link>
             <p className="text-xs text-gray-500 capitalize mt-1">
               {p.category}
             </p>
@@ -79,12 +86,20 @@ const Products = () => {
               <span className="text-lg font-semibold text-gray-900">
                 ${Number(p.price).toFixed(2)}
               </span>
-              <button
-                type="button"
-                className="inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                Add to cart
-              </button>
+              <div className="flex items-center gap-2">
+                <Link
+                  to={`/products/${p.id}`}
+                  className="inline-flex items-center px-3 py-2 rounded-md border border-gray-300 text-gray-700 text-sm hover:bg-gray-50"
+                >
+                  Details
+                </Link>
+                <button
+                  type="button"
+                  className="inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  Add to cart
+                </button>
+              </div>
             </div>
           </article>
         ))}
