@@ -7,7 +7,16 @@ const Footer = () => {
           reserved.
         </p>
         <p className="text-sm text-gray-400">
-          Built with React, Axios, and Tailwind CSS.
+          Built with React, Axios, and Tailwind CSS.{" "}
+          <a
+            href="https://github.com/ELMACHHOUNE"
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue-600 hover:text-blue-700"
+            title="ELMACHHOUNE on GitHub"
+          >
+            GitHub: @ELMACHHOUNE
+          </a>
         </p>
       </div>
     </footer>

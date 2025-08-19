@@ -1,12 +1,53 @@
-# React + Vite
+# MSc E-commerce website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple e-commerce UI built with:
 
-Currently, two official plugins are available:
+- React + react-router-dom
+- Axios (Fake Store API)
+- Tailwind CSS
+- Global loading overlay (Axios interceptors)
+- Pagination (16 items per page)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Demo features
 
-## Expanding the ESLint configuration
+- Home: Intro/hero section
+- Products: Fetches all products from https://fakestoreapi.com/products/, with:
+  - Category filtering via query string (?category=...)
+  - Pagination (16 per page) with query string (?page=...)
+  - Product cards linking to product details
+- Product Details: Dynamic route /products/:id with image, price, rating, and description
+- Categories: Lists categories from the API, “View items” deep-links to filtered Products
+- 404: Friendly not found page for invalid routes
+- Global Loading: Fullscreen spinner during any Axios request
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Getting started
+
+1. Install dependencies:
+   - npm install
+2. Run the app:
+   - npm run dev
+3. Build:
+   - npm run build
+
+Project structure (key parts)
+/src
+
+- App.jsx: Router, layout, routes, 404
+- components/
+  - Navbar, Main, Footer
+  - Products (list + filter + pagination)
+  - Product (details)
+  - Categories (list + deep link to Products)
+  - Pagination (reusable)
+  - LoadingOverlay (global loading indicator)
+  - 404 (not found)
+- context/
+  - LoadingContext (Axios interceptors)
+
+API
+
+- Fake Store API: https://fakestoreapi.com/
+
+Author
+
+- GitHub: https://github.com/ELMACHHOUNE
