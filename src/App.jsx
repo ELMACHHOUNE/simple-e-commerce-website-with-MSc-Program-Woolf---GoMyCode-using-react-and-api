@@ -1,3 +1,4 @@
+import "./App.css"; // load Tailwind v4 and @theme
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
@@ -5,7 +6,7 @@ import Products from "./components/Products";
 import Footer from "./components/Footer";
 import Categories from "./components/Categories";
 import Product from "./components/Product";
-import NotFound from "./components/404"; // new
+import NotFound from "./components/404";
 import { LoadingProvider } from "./context/LoadingContext";
 import LoadingOverlay from "./components/LoadingOverlay";
 
@@ -13,7 +14,7 @@ const App = () => {
   return (
     <LoadingProvider>
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col bg-gray-50">
+        <div className="min-h-screen flex flex-col bg-brand-50">
           <LoadingOverlay />
           <Navbar />
           <main className="flex-1">

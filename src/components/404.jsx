@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const NotFound = () => {
   return (
     <section className="max-w-3xl mx-auto px-4 py-16 text-center">
-      <p className="text-sm font-semibold text-blue-600">404</p>
+      <p className="text-sm font-semibold text-brand-600">404</p>
       <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-gray-900">
         Page not found
       </h1>
@@ -13,13 +13,13 @@ const NotFound = () => {
       <div className="mt-8 flex items-center justify-center gap-3">
         <Link
           to="/"
-          className="px-5 py-3 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-5 py-3 rounded-md bg-brand-600 text-white text-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-brand-600"
         >
           Go Home
         </Link>
         <Link
           to="/products"
-          className="px-5 py-3 rounded-md border border-gray-300 text-gray-700 text-sm hover:bg-gray-50"
+          className="px-5 py-3 rounded-md border border-brand-300 text-brand-600 text-sm hover:bg-brand-50"
         >
           Browse Products
         </Link>

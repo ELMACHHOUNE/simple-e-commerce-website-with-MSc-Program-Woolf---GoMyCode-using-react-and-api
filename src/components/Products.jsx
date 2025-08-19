@@ -124,7 +124,7 @@ const Products = () => {
         {activeCategory && (
           <Link
             to="/products"
-            className="text-sm text-blue-600 hover:text-blue-700"
+            className="text-sm text-brand-600 hover:opacity-90"
             title="Clear filter"
           >
             Clear filter
@@ -156,7 +156,7 @@ const Products = () => {
                 </Link>
                 <Link
                   to={`/products/${p.id}`}
-                  className="mt-4 text-sm font-medium text-gray-900 h-10 overflow-hidden hover:text-blue-600"
+                  className="mt-4 text-sm font-medium text-gray-900 h-10 overflow-hidden hover:text-brand-600"
                 >
                   {p.title}
                 </Link>
@@ -170,13 +170,13 @@ const Products = () => {
                   <div className="flex items-center gap-2">
                     <Link
                       to={`/products/${p.id}`}
-                      className="inline-flex items-center px-3 py-2 rounded-md border border-gray-300 text-gray-700 text-sm hover:bg-gray-50"
+                      className="inline-flex items-center px-3 py-2 rounded-md border border-brand-300 text-brand-600 text-sm hover:bg-brand-50"
                     >
                       Details
                     </Link>
                     <button
                       type="button"
-                      className="inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="inline-flex items-center px-3 py-2 rounded-md bg-brand-600 text-white text-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-brand-600"
                     >
                       Add to cart
                     </button>

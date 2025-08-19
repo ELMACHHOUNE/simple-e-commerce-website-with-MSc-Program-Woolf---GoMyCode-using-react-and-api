@@ -33,7 +33,7 @@ const Pagination = ({
         className={`px-3 py-2 rounded border text-sm ${
           currentPage === 1
             ? "cursor-not-allowed text-gray-300 border-gray-200"
-            : "border-gray-300 text-gray-700 hover:bg-gray-50"
+            : "border-brand-300 text-gray-700 hover:bg-brand-50"
         }`}
       >
         Prev
@@ -46,8 +46,8 @@ const Pagination = ({
             onClick={() => goto(1)}
             className={`px-3 py-2 rounded border text-sm ${
               currentPage === 1
-                ? "bg-blue-600 text-white border-blue-600"
-                : "border-gray-300 text-gray-700 hover:bg-gray-50"
+                ? "bg-brand-600 text-white border-brand-600"
+                : "border-brand-300 text-gray-700 hover:bg-brand-50"
             }`}
           >
             1
@@ -63,8 +63,8 @@ const Pagination = ({
           onClick={() => goto(p)}
           className={`px-3 py-2 rounded border text-sm ${
             p === currentPage
-              ? "bg-blue-600 text-white border-blue-600"
-              : "border-gray-300 text-gray-700 hover:bg-gray-50"
+              ? "bg-brand-600 text-white border-brand-600"
+              : "border-brand-300 text-gray-700 hover:bg-brand-50"
           }`}
         >
           {p}
@@ -81,8 +81,8 @@ const Pagination = ({
             onClick={() => goto(totalPages)}
             className={`px-3 py-2 rounded border text-sm ${
               currentPage === totalPages
-                ? "bg-blue-600 text-white border-blue-600"
-                : "border-gray-300 text-gray-700 hover:bg-gray-50"
+                ? "bg-brand-600 text-white border-brand-600"
+                : "border-brand-300 text-gray-700 hover:bg-brand-50"
             }`}
           >
             {totalPages}
@@ -97,7 +97,7 @@ const Pagination = ({
         className={`px-3 py-2 rounded border text-sm ${
           currentPage === totalPages
             ? "cursor-not-allowed text-gray-300 border-gray-200"
-            : "border-gray-300 text-gray-700 hover:bg-gray-50"
+            : "border-brand-300 text-gray-700 hover:bg-brand-50"
         }`}
       >
         Next

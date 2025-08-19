@@ -46,7 +46,7 @@ const Product = () => {
         </div>
         <Link
           to="/products"
-          className="inline-block mt-4 text-blue-600 hover:text-blue-700"
+          className="inline-block mt-4 text-brand-600 hover:opacity-90"
         >
           ← Back to products
         </Link>
@@ -56,10 +56,7 @@ const Product = () => {
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-10">
-      <Link
-        to="/products"
-        className="text-blue-600 hover:text-blue-700 text-sm"
-      >
+      <Link to="/products" className="text-brand-600 hover:opacity-90 text-sm">
         ← Back to products
       </Link>
       <div className="grid md:grid-cols-2 gap-10 mt-6">
@@ -81,7 +78,7 @@ const Product = () => {
               ${Number(product.price).toFixed(2)}
             </span>
             {product.rating && (
-              <span className="text-sm text-amber-600 bg-amber-50 border border-amber-200 px-2 py-1 rounded">
+              <span className="text-sm text-brand-600 bg-brand-50 border border-brand-300 px-2 py-1 rounded">
                 ⭐ {product.rating.rate} • {product.rating.count} reviews
               </span>
             )}
@@ -94,13 +91,13 @@ const Product = () => {
           <div className="mt-8 flex gap-3">
             <button
               type="button"
-              className="px-5 py-3 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-5 py-3 rounded-md bg-brand-600 text-white text-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-brand-600"
             >
               Add to cart
             </button>
             <button
               type="button"
-              className="px-5 py-3 rounded-md border border-gray-300 text-gray-700 text-sm hover:bg-gray-50"
+              className="px-5 py-3 rounded-md border border-brand-300 text-brand-600 text-sm hover:bg-brand-50"
             >
               Buy now
             </button>

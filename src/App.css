@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+/* Tailwind v4 theme tokens */
+@theme {
+  --color-brand-600: #8D6E63; /* primary */
+  --color-brand-300: #D7CCC8; /* accents/borders */
+  --color-brand-50:  #EFEBE9; /* subtle backgrounds */
+}
+
+/* Optional */
+html, body, #root {
+  height: 100%;
+}
