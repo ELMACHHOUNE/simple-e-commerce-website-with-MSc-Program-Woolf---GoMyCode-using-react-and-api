@@ -1,0 +1,96 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [status, setStatus] = useState("loading"); // loading | ok | error
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data } = await axios.get("https://fakestoreapi.com/products/");
+        setProducts(data);
+        setStatus("ok");
+      } catch {
+        setStatus("error");
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  if (status === "loading") {
+    return (
+      <section className="max-w-7xl mx-auto px-4 py-10">
+        <h1 className="text-2xl font-semibold mb-6">All Products</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-lg shadow p-4 animate-pulse space-y-4"
+            >
+              <div className="w-full aspect-square bg-gray-200 rounded" />
+              <div className="h-4 bg-gray-200 rounded w-3/4" />
+              <div className="h-3 bg-gray-200 rounded w-1/2" />
+              <div className="flex justify-between items-center">
+                <div className="h-5 bg-gray-200 rounded w-16" />
+                <div className="h-9 bg-gray-200 rounded w-24" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <section className="max-w-2xl mx-auto px-4 py-10">
+        <div className="bg-red-50 text-red-700 border border-red-200 p-4 rounded">
+          Failed to load products. Please try again later.
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="max-w-7xl mx-auto px-4 py-10">
+      <h1 className="text-2xl font-semibold mb-6">All Products</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {products.map((p) => (
+          <article
+            key={p.id}
+            className="bg-white rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col"
+          >
+            <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
+              <img
+                src={p.image}
+                alt={p.title}
+                className="h-40 object-contain"
+                loading="lazy"
+              />
+            </div>
+            <h3 className="mt-4 text-sm font-medium text-gray-900 h-10 overflow-hidden">
+              {p.title}
+            </h3>
+            <p className="text-xs text-gray-500 capitalize mt-1">
+              {p.category}
+            </p>
+            <div className="mt-auto flex items-center justify-between pt-4">
+              <span className="text-lg font-semibold text-gray-900">
+                ${Number(p.price).toFixed(2)}
+              </span>
+              <button
+                type="button"
+                className="inline-flex items-center px-3 py-2 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Add to cart
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default Products;
